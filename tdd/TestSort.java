@@ -1,12 +1,13 @@
-public class TestSort {
-    public static void main(String[] args) {
-        testSort();
-    }
+import org.junit.Test;
 
-    private static void testSort() {
-        String[] input = {"world", "hello", "my"};
-        String[] expected = {"world", "hello", "my"};
-        Sort.sort(input);
-        org.junit.Assert.assertArrayEquals(expected, input);
+import static org.junit.Assert.*;
+
+public class TestSort {
+    @Test
+    public void testSort() {
+        String[] input = {"i", "have", "an", "egg"};
+        String[] expected = {"an", "egg", "have", "i"};
+        Sort.selectSort(input);
+        assertArrayEquals(expected, input);
     }
 }
