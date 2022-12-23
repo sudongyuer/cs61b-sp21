@@ -189,10 +189,10 @@ public class Model extends Observable {
      */
     public static boolean maxTileExists(Board b) {
         int size = b.size();
-        for(int row = 0; row < size; row++) {
-            for(int col = 0; col < size; col++) {
+        for (int row = 0; row < size; row++) {
+            for (int col = 0; col < size; col++) {
                 Tile currentTile = b.tile(col, row);
-                if(currentTile !=null && currentTile.value() == MAX_PIECE){
+                if (currentTile != null && currentTile.value() == MAX_PIECE) {
                     return true;
                 }
             }
@@ -208,7 +208,62 @@ public class Model extends Observable {
      * 2. There are two adjacent tiles with the same value.
      */
     public static boolean atLeastOneMoveExists(Board b) {
-        // TODO: Fill in this function.
+        if (emptySpaceExists(b)) {
+            return true;
+        }
+        if (adjacentTilesWithSameValueExists(b)) {
+            return true;
+        }
+        return false;
+    }
+
+    private static boolean adjacentTilesWithSameValueExists(Board b) {
+       int size = b.size();
+       for(int row = 0; row<size;row++){
+           for(int col=0;col<size;col++){
+               Tile currentTile = b.tile(col,row);
+               //check adjacent tiles have same value
+               boolean result = checkTileNeighborsWithSameValue(b,currentTile);
+               if(result){
+                   return true;
+               }
+           }
+       }
+       return false;
+    }
+
+    private static boolean checkTileNeighborsWithSameValue(Board b, Tile currentTile) {
+        int size = b.size();
+        int currentRow = currentTile.row();
+        int currentCol = currentTile.col();
+        //bottom
+        if(currentRow-1>=0){
+            Tile bottomTile = b.tile(currentCol,currentRow-1);
+            if(bottomTile!=null && bottomTile.value()==currentTile.value()){
+                return true;
+            }
+        }
+        //top
+        if(currentRow+1<size){
+            Tile topTile = b.tile(currentCol,currentRow+1);
+            if(topTile!=null && topTile.value() == currentTile.value()){
+                return true;
+            }
+        }
+        //left
+        if(currentCol-1>=0){
+            Tile leftTile = b.tile(currentCol-1,currentRow);
+            if(leftTile!=null && leftTile.value() == currentTile.value()){
+                return true;
+            }
+        }
+        //right
+        if(currentCol+1<size){
+            Tile rightTile = b.tile(currentCol+1,currentRow);
+            if(rightTile!=null && rightTile.value() == currentTile.value()){
+                return true;
+            }
+        }
         return false;
     }
 
